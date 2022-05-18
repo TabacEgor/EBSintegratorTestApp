@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@+id/productListFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.tabac.ebsintegratortestapp.screens.products.ProductListFragment"
+        android:label="Product List"
+        tools:layout="@layout/fragment_product_list">
+
+        <action
+            android:id="@+id/action_navigation_product_list_to_navigation_product"
+            app:destination="@id/productFragment" >
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="com.tabac.ebsintegratortestapp.screens.product.ProductFragment"
+        android:label="Product List"
+        tools:layout="@layout/fragment_product">
+        <argument
+            android:name="productId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>

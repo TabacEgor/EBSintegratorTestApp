@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivProductImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivProductImage"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvProductDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvProductPrice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnAddToFavorite"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/round_corner"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_favorite">
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/btnAddToCart"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/round_corner"
+                android:elevation="10dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_add_to_cart">
+            </ImageButton>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
