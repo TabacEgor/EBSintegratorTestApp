@@ -1,4 +1,4 @@
-package com.tabac.ebsintegratortestapp.network
+package com.tabac.ebsintegratortestapp.data.network.network
 
 import okhttp3.Interceptor
 import okhttp3.Response

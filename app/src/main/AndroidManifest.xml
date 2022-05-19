@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.EBSintegratorTestApp">
         <activity
-            android:name=".SplashActivity"
+            android:name=".screens.SplashActivity"
             android:theme="@style/SplashTheme"
             android:launchMode="singleTask"
             android:exported="true">
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity">
+            android:name=".screens.MainActivity">
         </activity>
     </application>
 

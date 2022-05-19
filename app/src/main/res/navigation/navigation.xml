@@ -16,6 +16,12 @@
             android:id="@+id/action_navigation_product_list_to_navigation_product"
             app:destination="@id/productFragment" >
         </action>
+
+        <action
+            android:id="@+id/action_navigation_product_list_to_navigation_favorites"
+            app:destination="@id/favoritesFragment" >
+        </action>
+
     </fragment>
 
     <fragment
@@ -28,5 +34,9 @@
             android:defaultValue="0"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.tabac.ebsintegratortestapp.screens.favorites.FavoritesFragment"
+        android:label="FavoritesFragment" />
 
 </navigation>

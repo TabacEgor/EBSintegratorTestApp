@@ -1,4 +1,4 @@
-package com.tabac.ebsintegratortestapp.network
+package com.tabac.ebsintegratortestapp.data.network
 
 import com.tabac.ebsintegratortestapp.utils.processResponse
 import kotlinx.coroutines.Dispatchers

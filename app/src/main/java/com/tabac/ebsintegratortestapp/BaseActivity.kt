@@ -25,6 +25,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         _binding = null
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     infix fun <T> LiveData<T>.observe(observer: (t: T) -> Unit) {
         observe(this@BaseActivity, Observer(observer))
     }

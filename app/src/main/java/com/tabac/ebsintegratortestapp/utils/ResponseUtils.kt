@@ -1,7 +1,7 @@
 package com.tabac.ebsintegratortestapp.utils
 
 import com.google.gson.Gson
-import com.tabac.ebsintegratortestapp.ServerError
+import com.tabac.ebsintegratortestapp.data.network.ServerError
 import retrofit2.Response
 
 fun <T> Response<T>.processResponse(): T {

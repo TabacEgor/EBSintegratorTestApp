@@ -19,8 +19,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
 
-    private val viewModel: ProductsViewModel by viewModels()
-    private val productListAdapter: ProductListAdapter by lazy { ProductListAdapter { onProductClick(it) } }
+    private val viewModel: ProductListViewModel by viewModels()
+    private val productListAdapter: ProductListAdapter by lazy { ProductListAdapter(
+        { onProductClick(it) },
+        { onFavoriteClick(it) },
+        { onAddToCartClick(it)} )
+    }
     private val postScrollListener = PageScrollListener({ viewModel.loadNextPage() })
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductListBinding
@@ -28,6 +32,7 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideBackButton()
         setupProductListRecyclerView()
         viewModel.getProducts()
 
@@ -50,4 +55,13 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
     private fun onProductClick(product: ProductDTO) {
         findNavController().navigate(R.id.productFragment, bundleOf("productId" to product.id))
     }
+
+    private fun onFavoriteClick(product: ProductDTO) {
+        viewModel.addProductToFavorite(product)
+    }
+
+    private fun onAddToCartClick(product: ProductDTO) {
+
+    }
+
 }

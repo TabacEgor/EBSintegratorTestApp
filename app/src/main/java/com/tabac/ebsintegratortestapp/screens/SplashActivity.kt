@@ -1,4 +1,4 @@
-package com.tabac.ebsintegratortestapp
+package com.tabac.ebsintegratortestapp.screens
 
 import android.content.Intent
 import android.os.Bundle

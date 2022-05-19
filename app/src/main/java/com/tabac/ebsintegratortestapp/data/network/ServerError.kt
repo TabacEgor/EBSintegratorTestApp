@@ -1,4 +1,4 @@
-package com.tabac.ebsintegratortestapp
+package com.tabac.ebsintegratortestapp.data.network
 
 import com.tabac.ebsintegratortestapp.utils.ErrorName
 import java.io.Serializable

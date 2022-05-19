@@ -1,4 +1,4 @@
-package com.tabac.ebsintegratortestapp.network
+package com.tabac.ebsintegratortestapp.data.network
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -34,4 +34,4 @@ private fun <T> makeService(clazz: Class<T>): T {
 
 const val DEFAULT_READ_TIMEOUT: Long = 60_000L
 const val DEFAULT_CONNECT_TIMEOUT: Long = 60_000L
-const val BASE_URL = "http://mobile-shop-api.hiring.devebs.net"
+const val BASE_URL = "http://mobile-shop-api.hiring.devebs.net" // TODO move url to BuildConfig

@@ -1,12 +1,10 @@
 package com.tabac.ebsintegratortestapp
 
 import androidx.lifecycle.*
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.tabac.ebsintegratortestapp.data.DataState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 

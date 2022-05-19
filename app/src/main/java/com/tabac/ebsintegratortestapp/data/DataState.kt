@@ -1,4 +1,4 @@
-package com.tabac.ebsintegratortestapp
+package com.tabac.ebsintegratortestapp.data
 
 sealed class DataState<T>(val payload: T?, val throwable: Throwable?) {
     class Progress: DataState<Any>(null, null)
