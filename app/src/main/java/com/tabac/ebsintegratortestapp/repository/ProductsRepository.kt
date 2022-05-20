@@ -8,11 +8,14 @@ class ProductsRepository @Inject constructor(
     private val productsRemoteDataSource: ProductsRemoteDataSource,
     private val productsLocalDataSource: ProductsLocalDataSource
 ) {
-    suspend fun getProducts() = productsRemoteDataSource.getProducts()
+    // TODO map with favorites
+    suspend fun getProducts(pageNumber: Int) = productsRemoteDataSource.getProducts(pageNumber)
 
     suspend fun getProductDetails(productId: Int) = productsRemoteDataSource.getProductDetails(productId)
 
     suspend fun addToFavorites(product: ProductDTO) = productsLocalDataSource.addToFavorites(product.toProductEntity())
+
+    suspend fun removeFromFavorites(productId: Int) = productsLocalDataSource.removeFromFavorites(productId)
 
     fun getAllFavoriteProducts() = productsLocalDataSource.getAllFavoritesProducts()
 }

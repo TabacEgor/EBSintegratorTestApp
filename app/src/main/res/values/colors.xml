@@ -11,4 +11,6 @@
     <color name="separatorColor">#E8EAED</color>
     <color name="transparent">#00000000 </color>.
     <color name="purpleMain">#7740A2</color>.
+    <color name="redColor">#E3453A</color>.
+    <color name="beigeColor">#FAF0D8</color>.
 </resources>

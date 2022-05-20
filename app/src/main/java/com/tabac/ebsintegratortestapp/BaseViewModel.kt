@@ -21,7 +21,6 @@ abstract class BaseViewModel : ViewModel(), LifecycleEventObserver {
     }
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-        TODO("Not yet implemented")
     }
 
     /**

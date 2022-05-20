@@ -22,15 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(binding.toolBar)
-        supportActionBar?.title = null
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-
-        binding.btnFavorites onClick {
-            navController.navigate(
-                ProductListFragmentDirections.actionNavigationProductListToNavigationFavorites()
-            )
-        }
     }
 }

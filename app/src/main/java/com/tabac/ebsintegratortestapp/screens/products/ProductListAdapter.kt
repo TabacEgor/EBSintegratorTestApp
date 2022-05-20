@@ -7,13 +7,14 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.tabac.ebsintegratortestapp.BaseAdapter
+import com.tabac.ebsintegratortestapp.R
 import com.tabac.ebsintegratortestapp.databinding.ItemProductBinding
 import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
 import com.tabac.ebsintegratortestapp.utils.onClick
 
 class ProductListAdapter(
     private val productClickListener: (ProductDTO) -> Unit,
-    private val favoriteClickListener: (ProductDTO) -> Unit,
+    private val favoriteClickListener: (ProductDTO, Int) -> Unit,
     private val addToCartClickListener: (ProductDTO) -> Unit
 ) : BaseAdapter<ProductDTO, BaseAdapter.BaseViewHolder<ProductDTO>>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<ProductDTO> {
@@ -35,18 +36,28 @@ class ProductListAdapter(
                     .asBitmap()
                     .load(item.main_image)
                     .into(ivProductImage)
+                if (item.isFavorite) {
+                    btnAddToFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                } else {
+                    btnAddToFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                }
                 root onClick {
                     productClickListener.invoke(item)
                 }
                 btnAddToFavorite onClick {
-                    favoriteClickListener.invoke(item)
+                    favoriteClickListener.invoke(item, adapterPosition)
                 }
                 btnAddToCart onClick {
                     addToCartClickListener.invoke(item)
                 }
             }
         }
+    }
 
+    fun favoriteOrUnFavoriteItem(position: Int) {
+        val item = getItem(position)
+        item.isFavorite = !item.isFavorite
+        notifyItemChanged(position)
     }
 
 }

@@ -1,7 +1,9 @@
 package com.tabac.ebsintegratortestapp.data.network
 
 import com.google.gson.GsonBuilder
+import com.tabac.ebsintegratortestapp.BuildConfig
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.reflect.Modifier
@@ -11,6 +13,13 @@ private fun makeClient(): OkHttpClient {
     return OkHttpClient.Builder()
         .readTimeout(DEFAULT_READ_TIMEOUT, TimeUnit.MILLISECONDS)
         .connectTimeout(DEFAULT_CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
+        .also {
+            if (BuildConfig.DEBUG) {
+                it.addInterceptor(HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                })
+        }
+        }
         .build()
 }
 

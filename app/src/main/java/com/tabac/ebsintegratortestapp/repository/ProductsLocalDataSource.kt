@@ -17,6 +17,10 @@ class ProductsLocalDataSource @Inject constructor(
         productsDao.insert(productEntity)
     }
 
+    suspend fun removeFromFavorites(productId: Int) = exchangeLocal {
+        productsDao.delete(productId)
+    }
+
     fun getAllFavoritesProducts() = liveData<List<ProductDTO>> {
         emitSource(productsDao.getAllFavoriteProducts().map {
             val mappedFavoriteProduct = mutableListOf<ProductDTO>()

@@ -17,31 +17,53 @@ class ProductListViewModel @Inject constructor(
     private val productsRepository: ProductsRepository
 ) : BaseViewModel() {
 
-    private val _productsData = MutableLiveData<List<ProductDTO>>()
-    val productsData: LiveData<List<ProductDTO>> = _productsData
+    private val _productsData = MutableLiveData<MutableList<ProductDTO>>()
+    val productsData: LiveData<MutableList<ProductDTO>> = _productsData
+    val nextPageData = MutableLiveData<Unit>() // TODO Add Jetpack Pagination
+    var currentPage = 1
 
     private val _errorData = MutableLiveData<Event<String>>()
     val errorData: LiveData<Event<String>> = _errorData
 
-    fun getProducts() {
+    private val _successData = MutableLiveData<Event<Int>>()
+    val successData: LiveData<Event<Int>> = _successData
+
+    fun getProducts(reloadData: Boolean = true) {
+        if (reloadData) resetCurrentPage()
         launch {
-            productsRepository.getProducts()
+            productsRepository.getProducts(currentPage)
                 .onSuccess {
-                    _productsData.postValue(it)
+                    if (reloadData) {
+                        _productsData.postValue(it.toMutableList())
+                    } else {
+                        _productsData.value?.addAll(it.toMutableList())
+                        nextPageData.postValue(Unit)
+                    }
                 }
                 .onFailure {
-                    _errorData.postValue(Event(it.message ?: ""))
+                    _errorData.postValue(Event(it.message ?: "Something went wrong."))
+                    // Backend should return emptyList when page not exist - not 404 error
                 }
         }
     }
 
-    fun addProductToFavorite(product: ProductDTO) {
+    fun addProductToFavorite(product: ProductDTO, position: Int) {
         launch {
             productsRepository.addToFavorites(product)
+                .onSuccess {
+                    _successData.postValue(Event(position))
+                }.onFailure {
+                    _errorData.postValue(Event("Something went wrong. Product not added to favorites"))
+                }
         }
     }
 
     fun loadNextPage() {
-        // TODO add pagination
+        currentPage++
+        getProducts(reloadData = false)
+    }
+
+    private fun resetCurrentPage() {
+        currentPage = 1
     }
 }

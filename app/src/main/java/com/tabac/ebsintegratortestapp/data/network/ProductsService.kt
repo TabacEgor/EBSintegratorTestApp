@@ -10,7 +10,7 @@ import retrofit2.http.QueryMap
 interface ProductsService {
 
     @GET("/products")
-    suspend fun getAllProducts(@QueryMap productsRequest: Map<String, String>): Response<ProductsResponse>
+    suspend fun getAllProducts(@QueryMap productsRequest: Map<String, Int>): Response<ProductsResponse>
 
     @GET("/products/{id}")
     suspend fun getProductDetails(@Path("id") productId: Int): Response<ProductDTO>

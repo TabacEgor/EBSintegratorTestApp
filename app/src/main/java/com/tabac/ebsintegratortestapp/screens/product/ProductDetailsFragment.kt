@@ -5,24 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.tabac.ebsintegratortestapp.BaseFragment
 import com.tabac.ebsintegratortestapp.databinding.FragmentProductBinding
 import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
+import com.tabac.ebsintegratortestapp.screens.products.ProductListFragmentDirections
+import com.tabac.ebsintegratortestapp.utils.onClick
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductFragment : BaseFragment<FragmentProductBinding>() {
+class ProductDetailsFragment : BaseFragment<FragmentProductBinding>() {
 
     private val viewModel: ProductViewModel by viewModels()
-    private val args: ProductFragmentArgs by navArgs()
+    private val args: ProductDetailsFragmentArgs by navArgs()
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductBinding
         get() = FragmentProductBinding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setSupportActionBar(binding.toolBar)
         showBackButton()
+        // TODO ViewPager for images
         viewModel.getProductDetails(args.productId)
 
         with(viewModel) {
@@ -46,7 +51,11 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
         }
     }
 
-    override fun showBackButton() {
-        super.showBackButton()
+    override fun clicks() {
+        binding.btnFavorites onClick  {
+            findNavController().navigate(
+                ProductListFragmentDirections.actionNavigationProductListToNavigationFavorites()
+            )
+        }
     }
 }

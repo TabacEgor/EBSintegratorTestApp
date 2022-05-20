@@ -10,6 +10,9 @@ data class ProductDTO(
     val colour : String,
     val price : Int,
     val main_image : String,
+
+    // TODO add domain model
+    var isFavorite: Boolean = false
 )
 
 fun ProductDTO.toProductEntity(): FavoriteProductEntity {
@@ -20,6 +23,7 @@ fun ProductDTO.toProductEntity(): FavoriteProductEntity {
         this.size,
         this.colour,
         this.price,
-        this.main_image
+        this.main_image,
     )
 }
+

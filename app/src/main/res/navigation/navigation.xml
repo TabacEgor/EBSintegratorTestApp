@@ -26,9 +26,13 @@
 
     <fragment
         android:id="@+id/productFragment"
-        android:name="com.tabac.ebsintegratortestapp.screens.product.ProductFragment"
+        android:name="com.tabac.ebsintegratortestapp.screens.product.ProductDetailsFragment"
         android:label="Product List"
         tools:layout="@layout/fragment_product">
+        <action
+            android:id="@+id/action_navigation_product_list_to_navigation_favorites"
+            app:destination="@id/favoritesFragment" >
+        </action>
         <argument
             android:name="productId"
             android:defaultValue="0"
@@ -37,6 +41,10 @@
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.tabac.ebsintegratortestapp.screens.favorites.FavoritesFragment"
-        android:label="FavoritesFragment" />
+        android:label="FavoritesFragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
+    </fragment>
 
 </navigation>

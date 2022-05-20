@@ -25,6 +25,7 @@ fun FavoriteProductEntity.toProductDTO(): ProductDTO {
         this.size,
         this.colour,
         this.price,
-        this.main_image
+        this.main_image,
+        true
     )
 }

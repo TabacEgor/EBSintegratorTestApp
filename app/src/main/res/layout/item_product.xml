@@ -59,7 +59,9 @@
                 android:background="@drawable/round_corner"
                 android:layout_margin="8dp"
                 android:elevation="3dp"
-                android:src="@drawable/ic_favorite">
+                android:backgroundTint="@color/beigeColor"
+                android:src="@drawable/ic_baseline_favorite_border_24"
+                app:tint="@color/redColor">
             </ImageButton>
 
             <ImageButton
@@ -69,7 +71,7 @@
                 android:background="@drawable/round_corner"
                 android:elevation="3dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/ic_add_to_cart">
+                android:src="@drawable/ic_icon_cart">
             </ImageButton>
         </LinearLayout>
     </LinearLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,6 +26,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = bindingInflater.invoke(inflater, container, false)
+        clicks()
         return requireNotNull(_binding).root
     }
 
@@ -41,7 +43,12 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
+    fun setSupportActionBar(toolBar: androidx.appcompat.widget.Toolbar) {
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolBar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = null
+    }
 
+    open fun clicks() {}
 
     infix fun <T> LiveData<T>.observe(observer: (t: T) -> Unit) = observe(viewLifecycleOwner, Observer(observer))
     infix fun <T> LiveData<Event<T>>.observeOnce(observer: (t: T) -> Unit) = observe(viewLifecycleOwner) { it.getContentIfNotHandled()?.let(observer) }
