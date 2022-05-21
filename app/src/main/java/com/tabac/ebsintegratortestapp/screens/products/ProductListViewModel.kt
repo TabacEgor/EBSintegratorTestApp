@@ -22,6 +22,11 @@ class ProductListViewModel @Inject constructor(
     val nextPageData = MutableLiveData<Unit>() // TODO Add Jetpack Pagination
     var currentPage = 1
 
+
+    var itemsInCart: Int = 0 // TODO observe items count from local Database cart implementation
+    private val _addToCartData = MutableLiveData<Int>()
+    val addToCartData: LiveData<Int> = _addToCartData
+
     private val _errorData = MutableLiveData<Event<String>>()
     val errorData: LiveData<Event<String>> = _errorData
 
@@ -56,6 +61,12 @@ class ProductListViewModel @Inject constructor(
                     _errorData.postValue(Event("Something went wrong. Product not added to favorites"))
                 }
         }
+    }
+
+    // TODO remove these duplications in viewModels when cart local database will be implemented
+    fun addToCart(product: ProductDTO) {
+        itemsInCart++
+        _addToCartData.postValue(itemsInCart)
     }
 
     fun removeFromFavorites(product: ProductDTO, position: Int) {

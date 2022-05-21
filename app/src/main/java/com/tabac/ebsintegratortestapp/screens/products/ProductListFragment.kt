@@ -48,6 +48,9 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
             successData observeOnce {
                 productListAdapter.favoriteOrUnFavoriteItem(it)
             }
+            addToCartData observe {
+                binding.btnCart.tvCartItems.text = it.toString()
+            }
         }
 
         binding.btnFavorites onClick  {
@@ -79,14 +82,17 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
     }
 
     private fun onAddToCartClick(product: ProductDTO) {
-
+        viewModel.addToCart(product)
     }
 
     override fun clicks() {
-        binding.btnFavorites onClick  {
-            findNavController().navigate(
-                ProductListFragmentDirections.actionNavigationProductListToNavigationFavorites()
-            )
+        with(binding) {
+            btnFavorites onClick  {
+                findNavController().navigate(
+                    ProductListFragmentDirections.actionNavigationProductListToNavigationFavorites()
+                )
+            }
         }
+
     }
 }

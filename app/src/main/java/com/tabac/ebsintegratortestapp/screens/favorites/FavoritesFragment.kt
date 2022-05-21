@@ -26,7 +26,7 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
         get() = FragmentFavoritesBinding::inflate
     private val favoriteProductsAdapter: ProductListAdapter by lazy { ProductListAdapter(
         { onProductClick(it) },
-        { product, position -> onFavoriteClick(product, position) },
+        { product, _ -> onFavoriteClick(product) },
         { onAddToCartClick(it) } )
     }
 
@@ -35,8 +35,13 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
         setSupportActionBar(binding.toolBar)
         showBackButton()
         setupProductListRecyclerView()
-        viewModel.favoritesData observe {
-            showFavoriteProducts(it)
+        with(viewModel) {
+            favoritesData observe {
+                showFavoriteProducts(it)
+            }
+            addToCartData observe {
+                binding.btnCart.tvCartItems.text = it.toString()
+            }
         }
     }
 
@@ -56,11 +61,12 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
         findNavController().navigate(R.id.productFragment, bundleOf(PRODUCT_ID to product.id))
     }
 
-    private fun onFavoriteClick(product: ProductDTO, position: Int) {
+    private fun onFavoriteClick(product: ProductDTO) {
         viewModel.removeFromFavorites(product)
     }
 
     private fun onAddToCartClick(product: ProductDTO) {
+        viewModel.addToCart(product)
     }
 
     override fun clicks() {
