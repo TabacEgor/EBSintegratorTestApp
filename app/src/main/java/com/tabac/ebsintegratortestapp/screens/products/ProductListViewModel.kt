@@ -58,6 +58,17 @@ class ProductListViewModel @Inject constructor(
         }
     }
 
+    fun removeFromFavorites(product: ProductDTO, position: Int) {
+        launch {
+            productsRepository.removeFromFavorites(productId = product.id)
+                .onSuccess {
+                    _successData.postValue(Event(position))
+                }.onFailure {
+                    _errorData.postValue(Event("Something went wrong. Product not added to favorites"))
+                }
+        }
+    }
+
     fun loadNextPage() {
         currentPage++
         getProducts(reloadData = false)

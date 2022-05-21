@@ -71,7 +71,11 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
     }
 
     private fun onFavoriteClick(product: ProductDTO, position: Int) {
-        viewModel.addProductToFavorite(product, position)
+        if (product.isFavorite) {
+            viewModel.removeFromFavorites(product, position)
+        } else {
+            viewModel.addProductToFavorite(product, position)
+        }
     }
 
     private fun onAddToCartClick(product: ProductDTO) {

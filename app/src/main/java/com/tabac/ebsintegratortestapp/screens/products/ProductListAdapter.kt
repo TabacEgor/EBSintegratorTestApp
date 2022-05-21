@@ -25,21 +25,22 @@ class ProductListAdapter(
         )
     }
 
-    inner class ProductViewHolder(val binding: ItemProductBinding) : BaseViewHolder<ProductDTO>(binding.root) {
+    inner class ProductViewHolder(private val binding: ItemProductBinding) : BaseViewHolder<ProductDTO>(binding.root) {
         @SuppressLint("SetTextI18n")
         override fun onBind(item: ProductDTO) {
             with(binding) {
                 tvProductName.text = item.name
                 tvProductDetails.text = item.details
-                tvProductPrice.text = "$ ${item.price}" // TODO Currency should comes from backend
+                tvProductPrice.text = "$ ${item.price},-" // TODO Currency should comes from backend
+                tvProductSecondPrice.text = "$ ${item.price},-"
                 Glide.with(tvProductName)
                     .asBitmap()
                     .load(item.main_image)
                     .into(ivProductImage)
                 if (item.isFavorite) {
-                    btnAddToFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    btnAddToFavorite.setImageResource(R.drawable.ic_favorite)
                 } else {
-                    btnAddToFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    btnAddToFavorite.setImageResource(R.drawable.ic_favorite_border)
                 }
                 root onClick {
                     productClickListener.invoke(item)

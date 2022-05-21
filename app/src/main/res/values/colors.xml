@@ -12,5 +12,8 @@
     <color name="transparent">#00000000 </color>.
     <color name="purpleMain">#7740A2</color>.
     <color name="redColor">#E3453A</color>.
-    <color name="beigeColor">#FAF0D8</color>.
+    <color name="beigeColor">#FAF0D8</color>
+    <color name="textColor">#07195C</color>
+    <color name="textPriceColor">#035A97</color>
+    <color name="textPriceSecondColor">#9CB1BC</color>
 </resources>

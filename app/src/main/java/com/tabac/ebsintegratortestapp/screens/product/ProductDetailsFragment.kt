@@ -1,5 +1,6 @@
 package com.tabac.ebsintegratortestapp.screens.product
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,11 +38,13 @@ class ProductDetailsFragment : BaseFragment<FragmentProductBinding>() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showProductDetails(product: ProductDTO) {
         with(binding) {
             tvProductName.text = product.name
             tvProductShortDetails.text = product.details
-            tvProductPrice.text = "$ ${product.price}" // TODO currency should come from server
+            tvProductPrice.text = "$ ${product.price},-" // TODO currency should come from server
+            tvProductSecondPrice.text = "$ ${product.price},-"
             tvProductInfo.text = product.details
             // TODO add swipe to all product images
             Glide.with(requireActivity())
