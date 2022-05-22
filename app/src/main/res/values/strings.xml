@@ -4,4 +4,7 @@
     <string name="add_to_cart">add to cart</string>
     <string name="buy_now">buy now</string>
     <string name="my_cart">my cart</string>
+    <string name="filters">filters</string>
+    <string name="sort_by">sort by</string>
+    <string name="favorites">favorites</string>
 </resources>

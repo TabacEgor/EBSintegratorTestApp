@@ -39,8 +39,10 @@ class ProductListAdapter(
                     .into(ivProductImage)
                 if (item.isFavorite) {
                     btnAddToFavorite.setImageResource(R.drawable.ic_favorite)
+                    btnAddToFavorite.backgroundTintList = binding.root.resources.getColorStateList(R.color.beigeColor, null)
                 } else {
                     btnAddToFavorite.setImageResource(R.drawable.ic_favorite_border)
+                    btnAddToFavorite.backgroundTintList = binding.root.resources.getColorStateList(R.color.white, null)
                 }
                 root onClick {
                     productClickListener.invoke(item)

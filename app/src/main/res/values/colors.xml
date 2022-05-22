@@ -16,4 +16,5 @@
     <color name="textColor">#07195C</color>
     <color name="textPriceColor">#035A97</color>
     <color name="textPriceSecondColor">#9CB1BC</color>
+    <color name="greyColor">#E5EBE9</color>
 </resources>
