@@ -9,15 +9,16 @@ import com.bumptech.glide.request.RequestOptions
 import com.tabac.ebsintegratortestapp.BaseAdapter
 import com.tabac.ebsintegratortestapp.R
 import com.tabac.ebsintegratortestapp.databinding.ItemProductBinding
+import com.tabac.ebsintegratortestapp.model.domain.Product
 import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
 import com.tabac.ebsintegratortestapp.utils.onClick
 
 class ProductListAdapter(
-    private val productClickListener: (ProductDTO) -> Unit,
-    private val favoriteClickListener: (ProductDTO, Int) -> Unit,
-    private val addToCartClickListener: (ProductDTO) -> Unit
-) : BaseAdapter<ProductDTO, BaseAdapter.BaseViewHolder<ProductDTO>>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<ProductDTO> {
+    private val productClickListener: (Product) -> Unit,
+    private val favoriteClickListener: (Product, Int) -> Unit,
+    private val addToCartClickListener: (Product) -> Unit
+) : BaseAdapter<Product, BaseAdapter.BaseViewHolder<Product>>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Product> {
         return ProductViewHolder(ItemProductBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -25,9 +26,9 @@ class ProductListAdapter(
         )
     }
 
-    inner class ProductViewHolder(private val binding: ItemProductBinding) : BaseViewHolder<ProductDTO>(binding.root) {
+    inner class ProductViewHolder(private val binding: ItemProductBinding) : BaseViewHolder<Product>(binding.root) {
         @SuppressLint("SetTextI18n")
-        override fun onBind(item: ProductDTO) {
+        override fun onBind(item: Product) {
             with(binding) {
                 tvProductName.text = item.name
                 tvProductDetails.text = item.details

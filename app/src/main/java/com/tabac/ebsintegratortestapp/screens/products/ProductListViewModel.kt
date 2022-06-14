@@ -3,12 +3,9 @@ package com.tabac.ebsintegratortestapp.screens.products
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.tabac.ebsintegratortestapp.BaseViewModel
-import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
-import com.tabac.ebsintegratortestapp.repository.ProductsLocalDataSource
-import com.tabac.ebsintegratortestapp.repository.ProductsRemoteDataSource
+import com.tabac.ebsintegratortestapp.model.domain.Product
 import com.tabac.ebsintegratortestapp.repository.ProductsRepository
 import com.tabac.ebsintegratortestapp.utils.Event
-import com.tabac.ebsintegratortestapp.utils.logd
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -17,13 +14,11 @@ class ProductListViewModel @Inject constructor(
     private val productsRepository: ProductsRepository
 ) : BaseViewModel() {
 
-    private val _productsData = MutableLiveData<MutableList<ProductDTO>>()
-    val productsData: LiveData<MutableList<ProductDTO>> = _productsData
+    private val _productsData = MutableLiveData<MutableList<Product>>()
+    val productsData: LiveData<MutableList<Product>> = _productsData
     val nextPageData = MutableLiveData<Unit>() // TODO Add Jetpack Pagination
     var currentPage = 1
 
-
-    var itemsInCart: Int = 0 // TODO observe items count from local Database cart implementation
     private val _addToCartData = MutableLiveData<Int>()
     val addToCartData: LiveData<Int> = _addToCartData
 
@@ -52,7 +47,7 @@ class ProductListViewModel @Inject constructor(
         }
     }
 
-    fun addProductToFavorite(product: ProductDTO, position: Int) {
+    fun addProductToFavorite(product: Product, position: Int) {
         launch {
             productsRepository.addToFavorites(product)
                 .onSuccess {
@@ -64,12 +59,10 @@ class ProductListViewModel @Inject constructor(
     }
 
     // TODO remove these duplications in viewModels when cart local database will be implemented
-    fun addToCart(product: ProductDTO) {
-        itemsInCart++
-        _addToCartData.postValue(itemsInCart)
+    fun addToCart(product: Product) {
     }
 
-    fun removeFromFavorites(product: ProductDTO, position: Int) {
+    fun removeFromFavorites(product: Product, position: Int) {
         launch {
             productsRepository.removeFromFavorites(productId = product.id)
                 .onSuccess {

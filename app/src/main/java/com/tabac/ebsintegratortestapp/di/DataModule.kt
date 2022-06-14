@@ -1,12 +1,13 @@
 package com.tabac.ebsintegratortestapp.di
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Room
 import com.tabac.ebsintegratortestapp.data.LocalDataSource
 import com.tabac.ebsintegratortestapp.data.local.EbsDatabase
 import com.tabac.ebsintegratortestapp.data.local.FavoriteProductsDao
-import com.tabac.ebsintegratortestapp.data.network.RemoteDataSource
-import com.tabac.ebsintegratortestapp.data.network.network.ProductsService
+import com.tabac.ebsintegratortestapp.data.RemoteDataSource
+import com.tabac.ebsintegratortestapp.data.network.ProductsService
 import com.tabac.ebsintegratortestapp.repository.ProductsLocalDataSource
 import com.tabac.ebsintegratortestapp.repository.ProductsRemoteDataSource
 import com.tabac.ebsintegratortestapp.repository.ProductsRepository

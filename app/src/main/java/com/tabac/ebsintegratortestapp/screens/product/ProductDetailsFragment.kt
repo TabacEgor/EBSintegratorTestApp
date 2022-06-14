@@ -17,9 +17,12 @@ import com.tabac.ebsintegratortestapp.utils.onClick
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductDetailsFragment : BaseFragment<FragmentProductBinding>() {
+class ProductDetailsFragment : BaseFragment<FragmentProductBinding, ProductViewModel>() {
 
-    private val viewModel: ProductViewModel by viewModels()
+    override val viewModel: ProductViewModel by viewModels()
+    override val render: ProductViewModel.() -> Unit = {
+        productData observe { showProductDetails(it) }
+    }
     private val args: ProductDetailsFragmentArgs by navArgs()
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductBinding
         get() = FragmentProductBinding::inflate
@@ -30,12 +33,6 @@ class ProductDetailsFragment : BaseFragment<FragmentProductBinding>() {
         showBackButton()
         // TODO ViewPager for images
         viewModel.getProductDetails(args.productId)
-
-        with(viewModel) {
-            productData observe {
-                showProductDetails(it)
-            }
-        }
     }
 
     @SuppressLint("SetTextI18n")

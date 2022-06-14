@@ -1,4 +1,4 @@
-package com.tabac.ebsintegratortestapp.data.network.network
+package com.tabac.ebsintegratortestapp.data.network
 
 import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
 import com.tabac.ebsintegratortestapp.model.responses.ProductsResponse

@@ -14,7 +14,7 @@ fun <T> Response<T>.processResponse(): T {
         try {
             val serverError = gson.fromJson(errorBody.string(), ServerError::class.java)
             throw when (code()) {
-                400, 404, 422 -> {
+                400, 404 -> {
                     when (serverError.error) {
                         else -> ServerException(serverError)
                     }

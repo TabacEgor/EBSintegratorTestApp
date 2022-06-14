@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tabac.ebsintegratortestapp.BaseFragment
 import com.tabac.ebsintegratortestapp.R
 import com.tabac.ebsintegratortestapp.databinding.FragmentProductListBinding
+import com.tabac.ebsintegratortestapp.model.domain.Product
 import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
 import com.tabac.ebsintegratortestapp.utils.PRODUCT_ID
 import com.tabac.ebsintegratortestapp.utils.PageScrollListener
@@ -19,9 +20,19 @@ import com.tabac.ebsintegratortestapp.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
+class ProductListFragment : BaseFragment<FragmentProductListBinding, ProductListViewModel>() {
 
-    private val viewModel: ProductListViewModel by viewModels()
+    override val viewModel: ProductListViewModel by viewModels()
+    override val render: ProductListViewModel.() -> Unit = {
+        productsData observe { productListAdapter.submitList(it) }
+        nextPageData observe {
+            productListAdapter.notifyDataSetChanged()
+            postScrollListener.stopLoading()
+        }
+        errorData observeOnce { showToast(it) }
+        successData observeOnce { productListAdapter.favoriteOrUnFavoriteItem(it) }
+        addToCartData observe { binding.btnCart.tvCartItems.text = it.toString() }
+    }
     private val productListAdapter: ProductListAdapter by lazy { ProductListAdapter(
         { onProductClick(it) },
         { product, position -> onFavoriteClick(product, position) },
@@ -37,21 +48,6 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
         hideBackButton()
         setupProductListRecyclerView()
         viewModel.getProducts()
-
-        with(viewModel) {
-            productsData observe { productListAdapter.submitList(it) }
-            nextPageData observe {
-                productListAdapter.notifyDataSetChanged()
-                postScrollListener.stopLoading()
-            }
-            errorData observeOnce { showToast(it) }
-            successData observeOnce {
-                productListAdapter.favoriteOrUnFavoriteItem(it)
-            }
-            addToCartData observe {
-                binding.btnCart.tvCartItems.text = it.toString()
-            }
-        }
 
         binding.btnFavorites onClick  {
             findNavController().navigate(
@@ -69,11 +65,11 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
         }
     }
 
-    private fun onProductClick(product: ProductDTO) {
+    private fun onProductClick(product: Product) {
         findNavController().navigate(R.id.productFragment, bundleOf(PRODUCT_ID to product.id))
     }
 
-    private fun onFavoriteClick(product: ProductDTO, position: Int) {
+    private fun onFavoriteClick(product: Product, position: Int) {
         if (product.isFavorite) {
             viewModel.removeFromFavorites(product, position)
         } else {
@@ -81,7 +77,7 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
         }
     }
 
-    private fun onAddToCartClick(product: ProductDTO) {
+    private fun onAddToCartClick(product: Product) {
         viewModel.addToCart(product)
     }
 
@@ -93,6 +89,5 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>() {
                 )
             }
         }
-
     }
 }

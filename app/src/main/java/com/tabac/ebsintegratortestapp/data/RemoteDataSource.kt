@@ -1,5 +1,6 @@
-package com.tabac.ebsintegratortestapp.data.network
+package com.tabac.ebsintegratortestapp.data
 
+import com.tabac.ebsintegratortestapp.data.network.retrofitService
 import com.tabac.ebsintegratortestapp.utils.processResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -3,10 +3,11 @@ package com.tabac.ebsintegratortestapp.repository
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import com.tabac.ebsintegratortestapp.data.LocalDataSource
-import com.tabac.ebsintegratortestapp.data.local.FavoriteProductEntity
 import com.tabac.ebsintegratortestapp.data.local.FavoriteProductsDao
-import com.tabac.ebsintegratortestapp.data.local.toProductDTO
+import com.tabac.ebsintegratortestapp.model.domain.Product
 import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
+import com.tabac.ebsintegratortestapp.model.entity.FavoriteProductEntity
+import com.tabac.ebsintegratortestapp.model.entity.toProduct
 import javax.inject.Inject
 
 class ProductsLocalDataSource @Inject constructor(
@@ -21,11 +22,15 @@ class ProductsLocalDataSource @Inject constructor(
         productsDao.delete(productId)
     }
 
-    fun getAllFavoritesProducts() = liveData<List<ProductDTO>> {
+    suspend fun getAllFavoritesProductsFromDb() = exchangeLocal {
+        productsDao.getAllFavoriteProductsFromDb().map { it.toProduct() }
+    }
+
+    fun getAllFavoritesProducts() = liveData<List<Product>> {
         emitSource(productsDao.getAllFavoriteProducts().map {
-            val mappedFavoriteProduct = mutableListOf<ProductDTO>()
+            val mappedFavoriteProduct = mutableListOf<Product>()
             it.forEach {
-                mappedFavoriteProduct.add(it.toProductDTO())
+                mappedFavoriteProduct.add(it.toProduct())
             }
             mappedFavoriteProduct
         })

@@ -1,6 +1,6 @@
 package com.tabac.ebsintegratortestapp.model.dto
 
-import com.tabac.ebsintegratortestapp.data.local.FavoriteProductEntity
+import com.tabac.ebsintegratortestapp.model.domain.Product
 
 data class ProductDTO(
     val id : Int,
@@ -10,20 +10,14 @@ data class ProductDTO(
     val colour : String,
     val price : Int,
     val main_image : String,
-
-    // TODO add domain model
-    var isFavorite: Boolean = false
 )
 
-fun ProductDTO.toProductEntity(): FavoriteProductEntity {
-    return FavoriteProductEntity(
+fun ProductDTO.toProduct(): Product {
+    return Product(
         this.id,
         this.name,
         this.details,
-        this.size,
-        this.colour,
         this.price,
         this.main_image,
     )
 }
-

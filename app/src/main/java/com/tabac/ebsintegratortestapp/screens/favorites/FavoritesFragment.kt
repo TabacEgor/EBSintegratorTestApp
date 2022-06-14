@@ -11,19 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tabac.ebsintegratortestapp.BaseFragment
 import com.tabac.ebsintegratortestapp.R
 import com.tabac.ebsintegratortestapp.databinding.FragmentFavoritesBinding
-import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
+import com.tabac.ebsintegratortestapp.model.domain.Product
 import com.tabac.ebsintegratortestapp.screens.products.ProductListAdapter
-import com.tabac.ebsintegratortestapp.screens.products.ProductListFragmentDirections
 import com.tabac.ebsintegratortestapp.utils.PRODUCT_ID
 import com.tabac.ebsintegratortestapp.utils.onClick
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
-
-    private val viewModel: FavoritesViewModel by viewModels()
+class FavoritesFragment : BaseFragment<FragmentFavoritesBinding, FavoritesViewModel>() {
+    override val viewModel: FavoritesViewModel by viewModels()
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentFavoritesBinding
         get() = FragmentFavoritesBinding::inflate
+    override val render: FavoritesViewModel.() -> Unit = {
+        favoritesData observe { showFavoriteProducts(it) }
+        addToCartData observe { binding.btnCart.tvCartItems.text = it.toString() }
+    }
     private val favoriteProductsAdapter: ProductListAdapter by lazy { ProductListAdapter(
         { onProductClick(it) },
         { product, _ -> onFavoriteClick(product) },
@@ -35,14 +37,6 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
         setSupportActionBar(binding.toolBar)
         showBackButton()
         setupProductListRecyclerView()
-        with(viewModel) {
-            favoritesData observe {
-                showFavoriteProducts(it)
-            }
-            addToCartData observe {
-                binding.btnCart.tvCartItems.text = it.toString()
-            }
-        }
     }
 
     private fun setupProductListRecyclerView() {
@@ -53,19 +47,19 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
         }
     }
 
-    private fun showFavoriteProducts(favoriteList: List<ProductDTO>) {
+    private fun showFavoriteProducts(favoriteList: List<Product>) {
         favoriteProductsAdapter.submitList(favoriteList)
     }
 
-    private fun onProductClick(product: ProductDTO) {
+    private fun onProductClick(product: Product) {
         findNavController().navigate(R.id.productFragment, bundleOf(PRODUCT_ID to product.id))
     }
 
-    private fun onFavoriteClick(product: ProductDTO) {
+    private fun onFavoriteClick(product: Product) {
         viewModel.removeFromFavorites(product)
     }
 
-    private fun onAddToCartClick(product: ProductDTO) {
+    private fun onAddToCartClick(product: Product) {
         viewModel.addToCart(product)
     }
 
@@ -76,4 +70,5 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding>() {
             )
         }
     }
+
 }

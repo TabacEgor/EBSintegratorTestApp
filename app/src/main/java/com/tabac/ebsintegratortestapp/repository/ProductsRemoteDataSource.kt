@@ -1,8 +1,8 @@
 package com.tabac.ebsintegratortestapp.repository
 
 import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
-import com.tabac.ebsintegratortestapp.data.network.network.ProductsService
-import com.tabac.ebsintegratortestapp.data.network.RemoteDataSource
+import com.tabac.ebsintegratortestapp.data.network.ProductsService
+import com.tabac.ebsintegratortestapp.data.RemoteDataSource
 import com.tabac.ebsintegratortestapp.model.Pagination
 import javax.inject.Inject
 
