@@ -10,10 +10,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.tabac.ebsintegratortestapp.BaseFragment
+import com.tabac.ebsintegratortestapp.R
 import com.tabac.ebsintegratortestapp.databinding.FragmentProductBinding
+import com.tabac.ebsintegratortestapp.model.domain.Product
 import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
 import com.tabac.ebsintegratortestapp.screens.products.ProductListFragmentDirections
 import com.tabac.ebsintegratortestapp.utils.onClick
+import com.tabac.ebsintegratortestapp.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,6 +25,8 @@ class ProductDetailsFragment : BaseFragment<FragmentProductBinding, ProductViewM
     override val viewModel: ProductViewModel by viewModels()
     override val render: ProductViewModel.() -> Unit = {
         productData observe { showProductDetails(it) }
+        addToCartData observe { showToast(getString(R.string.add_to_cart_success)) }
+        errorData observeOnce { showToast(it) }
     }
     private val args: ProductDetailsFragmentArgs by navArgs()
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductBinding
@@ -36,7 +41,7 @@ class ProductDetailsFragment : BaseFragment<FragmentProductBinding, ProductViewM
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showProductDetails(product: ProductDTO) {
+    private fun showProductDetails(product: Product) {
         with(binding) {
             tvProductName.text = product.name
             tvProductShortDetails.text = product.details
@@ -52,10 +57,15 @@ class ProductDetailsFragment : BaseFragment<FragmentProductBinding, ProductViewM
     }
 
     override fun clicks() {
-        binding.btnFavorites onClick  {
-            findNavController().navigate(
-                ProductListFragmentDirections.actionNavigationProductListToNavigationFavorites()
-            )
+        with(binding) {
+            btnAddToCart onClick {
+                viewModel.addToCart()
+            }
+            btnFavorites onClick  {
+                findNavController().navigate(
+                    ProductListFragmentDirections.actionNavigationProductListToNavigationFavorites()
+                )
+            }
         }
     }
 }

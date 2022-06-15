@@ -18,7 +18,7 @@ private fun makeClient(): OkHttpClient {
                 it.addInterceptor(HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 })
-        }
+            }
         }
         .build()
 }

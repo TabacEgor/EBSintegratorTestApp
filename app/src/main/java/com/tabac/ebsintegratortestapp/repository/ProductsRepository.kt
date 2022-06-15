@@ -1,19 +1,20 @@
 package com.tabac.ebsintegratortestapp.repository
 
 import com.tabac.ebsintegratortestapp.model.domain.Product
-import com.tabac.ebsintegratortestapp.model.domain.toProductEntity
+import com.tabac.ebsintegratortestapp.model.domain.toFavoriteProductEntity
 import com.tabac.ebsintegratortestapp.model.dto.toProduct
 import javax.inject.Inject
 
 class ProductsRepository @Inject constructor(
     private val productsRemoteDataSource: ProductsRemoteDataSource,
-    private val productsLocalDataSource: ProductsLocalDataSource
+    private val favoritesLocalDataSource: FavoritesLocalDataSource,
+    private val cartLocalDataSource: CartLocalDataSource
 ) {
     suspend fun getProducts(pageNumber: Int): Result<List<Product>> {
         val products = productsRemoteDataSource.getProducts(pageNumber).getOrDefault(emptyList()).map {
                 it.toProduct()
             }.also { products ->
-                productsLocalDataSource.getAllFavoritesProductsFromDb().getOrDefault(emptyList())
+                favoritesLocalDataSource.getAllFavoritesProductsFromDb().getOrDefault(emptyList())
                     .map { favoriteProduct ->
                         products.map { product ->
                             if (favoriteProduct.id == product.id) {
@@ -26,10 +27,18 @@ class ProductsRepository @Inject constructor(
     }
 
     suspend fun addToFavorites(product: Product) =
-        productsLocalDataSource.addToFavorites(product.toProductEntity())
+        favoritesLocalDataSource.addToFavorites(product.toFavoriteProductEntity())
+
+    suspend fun addToCart(product: Product) =
+        cartLocalDataSource.addToCart(product)
 
     suspend fun removeFromFavorites(productId: Int) =
-        productsLocalDataSource.removeFromFavorites(productId)
+        favoritesLocalDataSource.removeFromFavorites(productId)
+    suspend fun removeAllCartProducts() =
+        cartLocalDataSource.removeAllCartProducts()
 
-    fun getAllFavoriteProducts() = productsLocalDataSource.getAllFavoritesProducts()
+    fun getAllFavoriteProducts() = favoritesLocalDataSource.getAllFavoritesProducts()
+
+    fun getCartProductCount() = cartLocalDataSource.getCartProductsCount()
+
 }

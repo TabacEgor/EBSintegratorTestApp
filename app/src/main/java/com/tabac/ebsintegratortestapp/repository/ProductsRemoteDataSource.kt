@@ -4,13 +4,14 @@ import com.tabac.ebsintegratortestapp.model.dto.ProductDTO
 import com.tabac.ebsintegratortestapp.data.network.ProductsService
 import com.tabac.ebsintegratortestapp.data.RemoteDataSource
 import com.tabac.ebsintegratortestapp.model.Pagination
+import com.tabac.ebsintegratortestapp.model.domain.Product
+import com.tabac.ebsintegratortestapp.model.dto.toProduct
 import javax.inject.Inject
 
 const val PAGE_NUMBER = "page"
 const val PAGE_SIZE = "page_size"
 
-class ProductsRemoteDataSource @Inject constructor() : RemoteDataSource<ProductsService>(
-    ProductsService::class) {
+class ProductsRemoteDataSource @Inject constructor() : RemoteDataSource<ProductsService>(ProductsService::class) {
     private val pagination = Pagination()
 
     suspend fun getProducts(pageNumber: Int): Result<List<ProductDTO>> = exchange  {
@@ -19,10 +20,10 @@ class ProductsRemoteDataSource @Inject constructor() : RemoteDataSource<Products
         it.results
     }
 
-    suspend fun getProductDetails(productId: Int): Result<ProductDTO> = exchange {
+    suspend fun getProductDetails(productId: Int): Result<Product> = exchange {
         service.getProductDetails(productId)
     }.mapCatching {
-        it
+        it.toProduct()
     }
 
 }

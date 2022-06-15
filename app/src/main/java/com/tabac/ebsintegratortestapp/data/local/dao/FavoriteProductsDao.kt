@@ -1,4 +1,4 @@
-package com.tabac.ebsintegratortestapp.data.local
+package com.tabac.ebsintegratortestapp.data.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

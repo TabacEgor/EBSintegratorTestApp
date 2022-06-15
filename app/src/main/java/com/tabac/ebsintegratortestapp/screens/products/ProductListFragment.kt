@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tabac.ebsintegratortestapp.BaseFragment
 import com.tabac.ebsintegratortestapp.R
@@ -31,7 +33,7 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding, ProductList
         }
         errorData observeOnce { showToast(it) }
         successData observeOnce { productListAdapter.favoriteOrUnFavoriteItem(it) }
-        addToCartData observe { binding.btnCart.tvCartItems.text = it.toString() }
+        cartProductsCountData observe { binding.btnCart.tvCartItems.text = it.toString() }
     }
     private val productListAdapter: ProductListAdapter by lazy { ProductListAdapter(
         { onProductClick(it) },
@@ -39,7 +41,6 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding, ProductList
         { onAddToCartClick(it)} )
     }
     private val postScrollListener = PageScrollListener({ viewModel.loadNextPage() })
-
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductListBinding
         get() = FragmentProductListBinding::inflate
 
@@ -48,12 +49,6 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding, ProductList
         hideBackButton()
         setupProductListRecyclerView()
         viewModel.getProducts()
-
-        binding.btnFavorites onClick  {
-            findNavController().navigate(
-                ProductListFragmentDirections.actionNavigationProductListToNavigationFavorites()
-            )
-        }
     }
 
     private fun setupProductListRecyclerView() {
@@ -87,6 +82,38 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding, ProductList
                 findNavController().navigate(
                     ProductListFragmentDirections.actionNavigationProductListToNavigationFavorites()
                 )
+            }
+            btnList onClick {
+                changeProductsPresentation(ProductsPresentations.LIST)
+            }
+            btnGrid onClick {
+                changeProductsPresentation(ProductsPresentations.GRID)
+            }
+            btnCart.btnMyCart onClick {
+                viewModel.clearCart()
+            }
+        }
+    }
+
+    private fun changeProductsPresentation(presentation: ProductsPresentations) {
+        when(presentation) {
+            ProductsPresentations.LIST -> {
+                with(binding) {
+                    btnList.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.primaryColor)
+                    btnList.imageTintList = ContextCompat.getColorStateList(requireContext(), R.color.white)
+                    btnGrid.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.greyColor)
+                    btnGrid.imageTintList = ContextCompat.getColorStateList(requireContext(), R.color.primaryColor)
+                    rvProductList.layoutManager = LinearLayoutManager(requireContext())
+                }
+            }
+            ProductsPresentations.GRID -> {
+                with(binding) {
+                    btnList.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.greyColor)
+                    btnList.imageTintList = ContextCompat.getColorStateList(requireContext(), R.color.primaryColor)
+                    btnGrid.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.primaryColor)
+                    btnGrid.imageTintList = ContextCompat.getColorStateList(requireContext(), R.color.white)
+                    rvProductList.layoutManager = GridLayoutManager(requireContext(), 2)
+                }
             }
         }
     }

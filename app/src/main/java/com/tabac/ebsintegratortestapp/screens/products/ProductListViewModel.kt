@@ -19,14 +19,13 @@ class ProductListViewModel @Inject constructor(
     val nextPageData = MutableLiveData<Unit>() // TODO Add Jetpack Pagination
     var currentPage = 1
 
-    private val _addToCartData = MutableLiveData<Int>()
-    val addToCartData: LiveData<Int> = _addToCartData
-
     private val _errorData = MutableLiveData<Event<String>>()
     val errorData: LiveData<Event<String>> = _errorData
 
     private val _successData = MutableLiveData<Event<Int>>()
     val successData: LiveData<Event<Int>> = _successData
+
+    val cartProductsCountData = productsRepository.getCartProductCount()
 
     fun getProducts(reloadData: Boolean = true) {
         if (reloadData) resetCurrentPage()
@@ -58,8 +57,16 @@ class ProductListViewModel @Inject constructor(
         }
     }
 
-    // TODO remove these duplications in viewModels when cart local database will be implemented
     fun addToCart(product: Product) {
+        launch {
+            productsRepository.addToCart(product)
+        }
+    }
+
+    fun clearCart() {
+        launch {
+            productsRepository.removeAllCartProducts()
+        }
     }
 
     fun removeFromFavorites(product: Product, position: Int) {

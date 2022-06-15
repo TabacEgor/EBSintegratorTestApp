@@ -1,5 +1,6 @@
 package com.tabac.ebsintegratortestapp.model.domain
 
+import com.tabac.ebsintegratortestapp.model.entity.CartProductEntity
 import com.tabac.ebsintegratortestapp.model.entity.FavoriteProductEntity
 
 data class Product(
@@ -11,8 +12,18 @@ data class Product(
     var isFavorite: Boolean = false
 )
 
-fun Product.toProductEntity(): FavoriteProductEntity {
+fun Product.toFavoriteProductEntity(): FavoriteProductEntity {
     return FavoriteProductEntity(
+        this.id,
+        this.name,
+        this.details,
+        this.price,
+        this.main_image,
+    )
+}
+
+fun Product.toCartProductEntity(): CartProductEntity {
+    return CartProductEntity(
         this.id,
         this.name,
         this.details,

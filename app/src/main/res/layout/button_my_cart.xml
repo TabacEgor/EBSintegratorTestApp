@@ -34,9 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:text="0"
             android:fontFamily="@font/open_sans_bold"
+            android:text="0"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16sp">
 
