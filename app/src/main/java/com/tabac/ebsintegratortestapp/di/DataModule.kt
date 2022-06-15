@@ -3,7 +3,7 @@ package com.tabac.ebsintegratortestapp.di
 import android.content.Context
 import androidx.room.Room
 import com.tabac.ebsintegratortestapp.data.LocalDataSource
-import com.tabac.ebsintegratortestapp.data.local.EbsDatabase
+import com.tabac.ebsintegratortestapp.data.local.WowAppDatabase
 import com.tabac.ebsintegratortestapp.data.local.dao.FavoriteProductsDao
 import com.tabac.ebsintegratortestapp.data.RemoteDataSource
 import com.tabac.ebsintegratortestapp.data.local.dao.CartProductsDao
@@ -25,20 +25,20 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideRoomDatabaseInstance(@ApplicationContext appContext: Context): EbsDatabase {
-        return Room.databaseBuilder(appContext, EbsDatabase::class.java, "ebs_database")
+    fun provideRoomDatabaseInstance(@ApplicationContext appContext: Context): WowAppDatabase {
+        return Room.databaseBuilder(appContext, WowAppDatabase::class.java, "ebs_database")
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideFavoritesProductsDao(appDatabase: EbsDatabase): FavoriteProductsDao {
+    fun provideFavoritesProductsDao(appDatabase: WowAppDatabase): FavoriteProductsDao {
         return appDatabase.favoriteProductsDao()
     }
 
     @Provides
     @Singleton
-    fun provideCartProductsDao(appDatabase: EbsDatabase): CartProductsDao {
+    fun provideCartProductsDao(appDatabase: WowAppDatabase): CartProductsDao {
         return appDatabase.cartProductsDao()
     }
 
@@ -50,13 +50,13 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideFavoritesLocalDataSource(appDatabase: EbsDatabase): LocalDataSource {
+    fun provideFavoritesLocalDataSource(appDatabase: WowAppDatabase): LocalDataSource {
         return FavoritesLocalDataSource(appDatabase.favoriteProductsDao())
     }
 
     @Provides
     @Singleton
-    fun provideCartLocalDataSource(appDatabase: EbsDatabase): LocalDataSource {
+    fun provideCartLocalDataSource(appDatabase: WowAppDatabase): LocalDataSource {
         return CartLocalDataSource(appDatabase.cartProductsDao())
     }
 

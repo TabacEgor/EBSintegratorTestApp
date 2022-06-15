@@ -11,7 +11,7 @@ import com.tabac.ebsintegratortestapp.model.entity.FavoriteProductEntity
     entities = [FavoriteProductEntity::class, CartProductEntity::class],
     version = 2
 )
-abstract class EbsDatabase: RoomDatabase() {
+abstract class WowAppDatabase: RoomDatabase() {
     abstract fun favoriteProductsDao(): FavoriteProductsDao
     abstract fun cartProductsDao(): CartProductsDao
 }
