@@ -8,4 +8,5 @@
     <string name="sort_by">sort by</string>
     <string name="favorites">favorites</string>
     <string name="add_to_cart_success">Product added to cart successfully</string>
+    <string name="went_wrong">Something went wrong.</string>
 </resources>

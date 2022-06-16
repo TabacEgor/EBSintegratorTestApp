@@ -8,11 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewbinding.ViewBinding
+import com.tabac.ebsintegratortestapp.data.DataState
 import com.tabac.ebsintegratortestapp.utils.Event
 import com.tabac.ebsintegratortestapp.utils.Inflate
+import com.tabac.ebsintegratortestapp.utils.showToast
 
-abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
+abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     protected abstract val viewModel: VM
 
@@ -36,6 +39,16 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.state observe { state ->
+            when(state) {
+                is DataState.Success<*> -> hideProgress()
+                is DataState.Fail<*> -> {
+                    hideProgress()
+                    onError(throwable = state.throwable ?: Throwable(getString(R.string.went_wrong)))
+                }
+                is DataState.Progress -> showProgress()
+            }
+        }
         viewModel.render()
         setupUI()
         clicks()
@@ -61,6 +74,10 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
 
     open fun clicks() {}
     open fun setupUI() {}
+    open fun onError(throwable: Throwable) { showToast(throwable.message) }
+    open fun hideProgress() {}
+    open fun showProgress() {}
+    override fun onRefresh() { viewModel.onRefresh() }
 
     infix fun <T> LiveData<T>.observe(observer: (t: T) -> Unit) = observe(viewLifecycleOwner, Observer(observer))
     infix fun <T> LiveData<Event<T>>.observeOnce(observer: (t: T) -> Unit) = observe(viewLifecycleOwner) { it.getContentIfNotHandled()?.let(observer) }

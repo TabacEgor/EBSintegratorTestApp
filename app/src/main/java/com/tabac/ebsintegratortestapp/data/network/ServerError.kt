@@ -8,3 +8,7 @@ data class ServerError(
     val message: String?,
     val error: ErrorName?,
 ) : Serializable
+
+data class ServerErrorDetail(
+    val detail: String
+)
