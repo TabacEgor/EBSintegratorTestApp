@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/productListFragment"
-        android:name="com.tabac.ebsintegratortestapp.screens.products.ProductListFragment"
+        android:name="com.tabac.wowmobileshop.screens.products.ProductListFragment"
         android:label="Product List"
         tools:layout="@layout/fragment_product_list">
 
@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/productFragment"
-        android:name="com.tabac.ebsintegratortestapp.screens.product.ProductDetailsFragment"
+        android:name="com.tabac.wowmobileshop.screens.product.ProductDetailsFragment"
         android:label="Product List"
         tools:layout="@layout/fragment_product">
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.tabac.ebsintegratortestapp.screens.favorites.FavoritesFragment"
+        android:name="com.tabac.wowmobileshop.screens.favorites.FavoritesFragment"
         android:label="FavoritesFragment" >
         <action
             android:id="@+id/action_favoritesFragment_to_productListFragment"

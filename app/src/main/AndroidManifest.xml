@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tabac.ebsintegratortestapp">
+    package="com.tabac.wowmobileshop">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".App"
+        android:name="com.tabac.wowmobileshop.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.EBSintegratorTestApp">
         <activity
-            android:name=".screens.SplashActivity"
+            android:name="com.tabac.wowmobileshop.screens.SplashActivity"
             android:theme="@style/SplashTheme"
             android:launchMode="singleTask"
             android:exported="true">
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".screens.MainActivity">
+            android:name="com.tabac.wowmobileshop.screens.MainActivity">
         </activity>
     </application>
 
