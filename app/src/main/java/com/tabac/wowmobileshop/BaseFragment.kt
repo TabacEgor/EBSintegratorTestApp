@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewbinding.ViewBinding
 import com.tabac.wowmobileshop.data.DataState
+import com.tabac.wowmobileshop.data.network.ServerErrorDetail
 import com.tabac.wowmobileshop.utils.Event
 import com.tabac.wowmobileshop.utils.Inflate
 import com.tabac.wowmobileshop.utils.showToast
@@ -44,7 +45,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
                 is DataState.Success<*> -> hideProgress()
                 is DataState.Fail<*> -> {
                     hideProgress()
-                    onError(throwable = state.throwable ?: Throwable(getString(R.string.went_wrong)))
+                    state.throwable?.let { onError(throwable = it) }
                 }
                 is DataState.Progress -> showProgress()
             }
@@ -74,7 +75,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment(), 
 
     open fun clicks() {}
     open fun setupUI() {}
-    open fun onError(throwable: Throwable) { showToast(throwable.message) }
+    open fun onError(throwable: Throwable) { showToast(throwable.message!!) }
     open fun hideProgress() {}
     open fun showProgress() {}
     override fun onRefresh() { viewModel.onRefresh() }

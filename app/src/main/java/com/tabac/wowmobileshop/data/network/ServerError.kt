@@ -11,4 +11,4 @@ data class ServerError(
 
 data class ServerErrorDetail(
     val detail: String
-)
+): Serializable

@@ -39,10 +39,6 @@ class ProductListViewModel @Inject constructor(
                         nextPageData.postValue(Unit)
                     }
                 }
-                .onFailure {
-                    _errorData.postValue(Event(it.message ?: "Something went wrong."))
-                    // Backend should return emptyList when page not exist - not 404 error
-                }
         }
     }
 

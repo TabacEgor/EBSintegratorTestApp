@@ -11,7 +11,8 @@ class ProductsRepository @Inject constructor(
     private val cartLocalDataSource: CartLocalDataSource
 ) {
     suspend fun getProducts(pageNumber: Int): Result<List<Product>> {
-        val products = productsRemoteDataSource.getProducts(pageNumber).getOrDefault(emptyList()).map {
+        val products = productsRemoteDataSource.getProducts(pageNumber).onFailure { return Result.failure(it) }
+            .getOrDefault(emptyList()).map {
                 it.toProduct()
             }.also { products ->
                 favoritesLocalDataSource.getAllFavoritesProductsFromDb().getOrDefault(emptyList())
